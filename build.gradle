@@ -1,0 +1,36 @@
+plugins {
+	id 'org.graalvm.buildtools.native' version '0.9.12'
+    id 'application'	
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	compileOnly 'org.projectlombok:lombok:1.18.32'
+	annotationProcessor 'org.projectlombok:lombok:1.18.32'
+	
+	testCompileOnly 'org.projectlombok:lombok:1.18.32'
+	testAnnotationProcessor 'org.projectlombok:lombok:1.18.32'
+}
+
+group = 'com.github.JohnCannon87.AyaNeoFlipDSSubScreenColourChanger'
+version = '0.0.1-SNAPSHOT'
+
+application {
+    // Define the main class for the application.
+    mainClass = 'com.github.JohnCannon87.AyaNeoFlipDSSubScreenColourChanger.SubScreenColourChanger.SubScreenColourChangerApplication'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+graalvmNative {
+    binaries.all {
+        resources.autodetect()
+    }
+    toolchainDetection = false
+}
+  
