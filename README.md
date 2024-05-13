@@ -8,5 +8,5 @@ Run the application on your Flip DS, default values will set the screen to the v
 
 Some Screenshots below:
 
-![Screenshot of bottom screen monitoring](docs/Screenshot 1.png)
-![Screenshot of bottom screen performance](docs/Screenshot 2.png)
+![Screenshot of bottom screen monitoring](docs/Screenshot1.png)
+![Screenshot of bottom screen performance](docs/Screenshot2.png)
