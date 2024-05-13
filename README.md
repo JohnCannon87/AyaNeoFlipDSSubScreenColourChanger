@@ -6,7 +6,28 @@ Assuming your Ayaspace is installed as the default (C:\Program Files (x86)\AYASp
 
 Run the application on your Flip DS, default values will set the screen to the values I use (a light blue/cyan) but all values can be customised, you need to use Hex colour codes and RGB colour codes, can use https://htmlcolorcodes.com/color-picker/ to get your codes.
 
-Some Screenshots below:
+If you have everything setup as default you can also use the provided batch files (please run as Admin) to set some colours I've chosen, otherwise you can either run as a command line with some arguments provided as below or just run the exe and the cli will attempt to help you through:
 
-![Screenshot of bottom screen monitoring](docs/Screenshot1.png)
-![Screenshot of bottom screen performance](docs/Screenshot2.png)
+```batch
+SubScreenColourChanger.exe <Background Hex Code> <Text Hex Code> <TDP Icon Hex Code> "<Gradient Value 1>" "<Gradient Value 2>" "<Gradient Value 3>"
+```
+e.g.
+```batch
+SubScreenColourChanger.exe #12455f #305C73 #12455f "77 116 135" "107 139 155" "59 59 59"
+```
+
+Do NOT forget the quotes around the rgb codes otherwise you will get an error message when the format is checked.
+
+
+Screenshots below of the example colours in the provided batch files:
+
+## Blue
+![Blue Screenshot](docs/Blue.png)
+## Cyan
+![Cyan Screenshot](docs/Cyan.png)
+## Green
+![Green Screenshot](docs/Green.png)
+## Orange
+![Orange Screenshot](docs/Orange.png)
+## Purple
+![Purple Screenshot](docs/Purple.png)

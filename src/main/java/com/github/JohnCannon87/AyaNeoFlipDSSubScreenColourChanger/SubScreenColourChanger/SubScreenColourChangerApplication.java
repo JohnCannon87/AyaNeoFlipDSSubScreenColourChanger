@@ -2,6 +2,7 @@ package com.github.JohnCannon87.AyaNeoFlipDSSubScreenColourChanger.SubScreenColo
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.AccessDeniedException;
 import java.util.Scanner;
 
 public class SubScreenColourChangerApplication {
@@ -10,7 +11,23 @@ public class SubScreenColourChangerApplication {
 	static FileModificationData fileModificationData = null;
 	static FileModifier fileModifier = new FileModifier();
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
+		if (args.length > 0) {
+			if (args.length == 1) {
+				if ("RESTORE".equals(args[0])) {
+					restoreBackup();
+				}
+			} else if (args.length != 6) {
+				System.err.println("Incorrect number of arguments provided, usage should be like this:\n"
+						+ "#12455f, #2d95c9, #12455f \"34 140 204\" \"30 115 125\" \"14 59 59\"");
+			} else {
+				fileModificationData = FileModificationData.createFromArgs(args);
+
+				if (fileModificationData != null) {
+					modifyFiles(fileModificationData);
+				}
+			}
+		}
 		entryLoop(scanner);
 	}
 
@@ -25,12 +42,12 @@ public class SubScreenColourChangerApplication {
 			switch (selection) {
 			case 1: {
 				printToUser("MODIFYING FILES...");
-				modifyFiles(scanner);
+				modifyFiles();
 				break;
 			}
 			case 2: {
 				printToUser("RESTORING BACKUP...");
-				restoreBackup(scanner);
+				restoreBackup();
 				break;
 			}
 			case 0: {
@@ -42,9 +59,9 @@ public class SubScreenColourChangerApplication {
 				System.err.println(String.format("Invalid Selection: %s" + "\n", selection));
 			}
 			entryLoop(scanner);
-		} catch (FileNotFoundException e) {
+		} catch (FileNotFoundException | AccessDeniedException e) {
 			System.err.println(
-					"File Not Found Exception, most likely you need to run the application as an administrator");
+					"Exception, most likely you need to run the application as an administrator");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -52,15 +69,18 @@ public class SubScreenColourChangerApplication {
 
 	}
 
-	private static void modifyFiles(Scanner scanner) throws IOException {
+	private static void modifyFiles() throws IOException {
 		fileModificationData = FileModificationData.create(false);
-
-		printToUser("MODIFYING FILES NOW :)");
-		fileModifier.modifyFiles(fileModificationData);
-		printToUser("FILE MODIFIED PLEASE RESTART AYA SPACE/CONSOLE :)");
+		modifyFiles(fileModificationData);
 	}
 
-	private static void restoreBackup(Scanner scanner) throws IOException {
+	private static void modifyFiles(FileModificationData fileModificationData) throws IOException {
+		printToUser("MODIFYING FILES NOW :)");
+		fileModifier.modifyFiles(fileModificationData);
+		printToUser("FILES MODIFIED PLEASE RESTART AYA SPACE/CONSOLE :)");
+	}
+
+	private static void restoreBackup() throws IOException {
 		if (fileModificationData == null) {
 			fileModificationData = FileModificationData.create(true);
 		}

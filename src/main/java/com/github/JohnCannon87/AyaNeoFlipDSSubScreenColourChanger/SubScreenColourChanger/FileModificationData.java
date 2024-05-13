@@ -38,6 +38,56 @@ public class FileModificationData {
 		return String.format(pattern, split);
 	}
 
+	public static FileModificationData createFromArgs(String[] args) {
+		String newBackgroundColourCode = args[0];
+		String newTextColourCode = args[1];
+		String newTDPColourCode = args[2];
+		String newGradientOne = args[3];
+		String newGradientTwo = args[4];
+		String newGradientThree = args[5];
+
+		boolean anyValuesWrong = false;
+		anyValuesWrong = anyValuesWrong || checkIfValueMatchesFormat(newBackgroundColourCode, HEX_COLOUR_FORMAT,
+				"Background Colour Code", "#000000");
+		anyValuesWrong = anyValuesWrong
+				|| checkIfValueMatchesFormat(newTextColourCode, HEX_COLOUR_FORMAT, "Text Colour Code", "#000000");
+		anyValuesWrong = anyValuesWrong
+				|| checkIfValueMatchesFormat(newTDPColourCode, HEX_COLOUR_FORMAT, "TDP Icon Colour Code", "#000000");
+		anyValuesWrong = anyValuesWrong
+				|| checkIfValueMatchesFormat(newGradientOne, RGB_COLOUR_FORMAT, "Gradient Value 1", "\"000 000 000\"");
+		anyValuesWrong = anyValuesWrong
+				|| checkIfValueMatchesFormat(newGradientTwo, RGB_COLOUR_FORMAT, "Gradient Value 2", "\"000 000 000\"");
+		anyValuesWrong = anyValuesWrong || checkIfValueMatchesFormat(newGradientThree, RGB_COLOUR_FORMAT,
+				"Gradient Value 3", "\"000 000 000\"");
+
+		if (anyValuesWrong) {
+			System.err.println("Please correct incorrect values from argument before running again");
+			return null;
+		} else {
+
+			return new FileModificationDataBuilder()
+					.filePath(DEFAULT_FILE_PATH)
+					.backupLocation(DEFAULT_BACKUP_LOCATION)
+					.newBackgroundColourCode(newBackgroundColourCode)
+					.newTextColourCode(newTextColourCode)
+					.newTDPColourCode(newTDPColourCode)
+					.newGradientOne(formatGradient(GRADIENT_ONE_PATTERN, newGradientOne))
+					.newGradientTwo(formatGradient(GRADIENT_TWO_PATTERN, newGradientTwo))
+					.newGradientThree(formatGradient(GRADIENT_THREE_PATTERN, newGradientThree))
+					.build();
+		}
+	}
+
+	private static boolean checkIfValueMatchesFormat(String stringToCheck, String format, String value,
+			String expectedValue) {
+		if (valueDoesNotMatchFormat(stringToCheck, format)) {
+			System.err.println(String.format("%s is in an incorrect format for %s !\nShould be like: %s",
+					stringToCheck, value, expectedValue));
+			return true;
+		}
+		return false;
+	}
+
 	public static FileModificationData create(boolean justFilePaths) {
 		SubScreenColourChangerApplication.printToUser("Do you wish to use default values for everything ? (y/n)");
 		String decision = SubScreenColourChangerApplication.getValueFromUser();
