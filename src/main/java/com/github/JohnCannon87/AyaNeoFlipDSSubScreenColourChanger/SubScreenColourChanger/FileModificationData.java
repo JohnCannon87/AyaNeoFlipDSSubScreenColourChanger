@@ -9,7 +9,7 @@ import lombok.Data;
 @Data
 @Builder
 public class FileModificationData {
-	private static String DEFAULT_FILE_PATH = "C:\\Program Files (x86)\\AYASpace\\frontend\\js";
+	private static String DEFAULT_FILE_PATH = "C:\\Program Files (x86)\\AYASpace\\frontend";
 	private static String DEFAULT_BACKUP_LOCATION = DEFAULT_FILE_PATH + "\\backup";
 	private static String DEFAULT_BACKGROUND_CODE = "#12455f";
 	private static String DEFAULT_TEXT_CODE = "#2d95c9";

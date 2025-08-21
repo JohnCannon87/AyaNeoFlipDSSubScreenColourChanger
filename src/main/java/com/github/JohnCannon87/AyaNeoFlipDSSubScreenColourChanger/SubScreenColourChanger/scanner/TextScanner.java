@@ -1,18 +1,19 @@
 package com.github.JohnCannon87.AyaNeoFlipDSSubScreenColourChanger.SubScreenColourChanger.scanner;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.github.JohnCannon87.AyaNeoFlipDSSubScreenColourChanger.SubScreenColourChanger.FilePathPair;
+
 public class TextScanner {
 
-	public List<File> scanFilesForColourCode(List<File> filesToScan, String colourCode) {
-		List<File> matchingFiles = new ArrayList<>();
+	public List<FilePathPair> scanFilesForColourCode(List<FilePathPair> filesToScan, String colourCode) {
+		List<FilePathPair> matchingFiles = new ArrayList<>();
 
-		for (File file : filesToScan) {
+		for (FilePathPair file : filesToScan) {
 			if (containsText(file, colourCode)) {
 				matchingFiles.add(file);
 				logFileFound(file, colourCode);
@@ -22,13 +23,14 @@ public class TextScanner {
 		return matchingFiles;
 	}
 
-	private void logFileFound(File file, String colourCode) {
+	private void logFileFound(FilePathPair file, String colourCode) {
 		System.out.println(
-				String.format("File %s Scanned and Found Colour Code %s to replace", file.getName(), colourCode));
+				String.format("File %s Scanned and Found Colour Code %s to replace", file.getFile().getName(),
+						colourCode));
 	}
 
-	private boolean containsText(File file, String searchText) {
-		try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+	private boolean containsText(FilePathPair file, String searchText) {
+		try (BufferedReader reader = new BufferedReader(new FileReader(file.getFile()))) {
 			String line;
 			while ((line = reader.readLine()) != null) {
 				if (line.contains(searchText)) {

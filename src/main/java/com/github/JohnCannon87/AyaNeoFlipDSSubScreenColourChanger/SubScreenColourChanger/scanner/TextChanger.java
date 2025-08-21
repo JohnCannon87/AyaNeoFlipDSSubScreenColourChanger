@@ -8,13 +8,15 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 
+import com.github.JohnCannon87.AyaNeoFlipDSSubScreenColourChanger.SubScreenColourChanger.FilePathPair;
+
 public class TextChanger {
 
-	public void modifyFilesReplaceCodeOneWithCodeTwo(List<File> filesForModification, String oldColourCode,
+	public void modifyFilesReplaceCodeOneWithCodeTwo(List<FilePathPair> filesForModification, String oldColourCode,
 			String newColourCode) throws IOException {
-		for (File file : filesForModification) {
-			updateFile(oldColourCode, newColourCode, file);
-			logFileUpdated(file);
+		for (FilePathPair file : filesForModification) {
+			updateFile(oldColourCode, newColourCode, file.getFile());
+			logFileUpdated(file.getFile());
 		}
 	}
 

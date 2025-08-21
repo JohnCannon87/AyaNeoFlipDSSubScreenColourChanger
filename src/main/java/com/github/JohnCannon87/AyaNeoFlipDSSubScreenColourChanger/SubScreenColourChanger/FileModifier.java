@@ -1,6 +1,5 @@
 package com.github.JohnCannon87.AyaNeoFlipDSSubScreenColourChanger.SubScreenColourChanger;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +24,7 @@ public class FileModifier {
 	private static String GRADIENT_THREE = "rgba(59, 56, 14, 0.5) 91.75%)";
 
 	public void modifyFiles(FileModificationData fileModificationData) throws IOException {
-		List<File> jsFiles = fileScanner.scanForJsFiles(fileModificationData.getFilePath());
+		List<FilePathPair> jsFiles = fileScanner.scanForJsFiles(fileModificationData.getFilePath());
 
 		backupFilesToBeModified(jsFiles, fileModificationData.getBackupLocation());
 
@@ -37,8 +36,8 @@ public class FileModifier {
 		updateColour(jsFiles, GRADIENT_THREE, fileModificationData.getNewGradientThree());
 	}
 
-	private void backupFilesToBeModified(List<File> jsFiles, String backupLocation) throws IOException {
-		List<File> filesForModification = new ArrayList();
+	private void backupFilesToBeModified(List<FilePathPair> jsFiles, String backupLocation) throws IOException {
+		List<FilePathPair> filesForModification = new ArrayList();
 		filesForModification.addAll(textScanner.scanFilesForColourCode(jsFiles, BACKGROUND_COLOUR_CODE));
 		filesForModification.addAll(textScanner.scanFilesForColourCode(jsFiles, TEXT_COLOUR_CODE));
 		filesForModification.addAll(textScanner.scanFilesForColourCode(jsFiles, TDP_COLOUR_CODE));
@@ -48,14 +47,15 @@ public class FileModifier {
 		fileBackup.backupFiles(filesForModification, backupLocation);
 	}
 
-	private void updateColour(List<File> jsFiles, String oldColourCode, String newColourCode) throws IOException {
-		List<File> filesForModification = textScanner.scanFilesForColourCode(jsFiles, oldColourCode);
+	private void updateColour(List<FilePathPair> jsFiles, String oldColourCode, String newColourCode)
+			throws IOException {
+		List<FilePathPair> filesForModification = textScanner.scanFilesForColourCode(jsFiles, oldColourCode);
 
 		textChanger.modifyFilesReplaceCodeOneWithCodeTwo(filesForModification, oldColourCode, newColourCode);
 	}
 
 	public void restoreBackupFiles(FileModificationData fileModificationData) throws IOException {
-		List<File> jsFiles = fileScanner.scanForJsFiles(fileModificationData.getBackupLocation());
+		List<FilePathPair> jsFiles = fileScanner.scanForJsFiles(fileModificationData.getBackupLocation());
 		fileBackup.backupFiles(jsFiles, fileModificationData.getFilePath());
 	}
 }
