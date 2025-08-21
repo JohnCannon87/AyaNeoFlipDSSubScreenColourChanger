@@ -8,6 +8,7 @@ Run the application on your Flip DS, default values will set the screen to the v
 
 If you have everything setup as default you can also use the provided batch files (please run as Admin) to set some colours I've chosen, otherwise you can either run as a command line with some arguments provided as below or just run the exe and the cli will attempt to help you through:
 
+Can download from the Releases side bar or by clicking [here](https://github.com/JohnCannon87/AyaNeoFlipDSSubScreenColourChanger/releases/latest)
 ```batch
 SubScreenColourChanger.exe <Background Hex Code> <Text Hex Code> <TDP Icon Hex Code> "<Gradient Value 1>" "<Gradient Value 2>" "<Gradient Value 3>"
 ```
